@@ -1,143 +1,179 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <title>Bootstrap Example</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-<style>
-  li:not(:last-child) { 
-   margin-bottom: 10px;  
-}
-
-  .slider {
- position:relative;
- background:#fcfcfc;
- border-radius:5px;
- display:flex;
- align-items:center;
-}
-.slider p {
- font-size:18px;
- font-weight:600;
- font-family: Open Sans;
- color:#7E6D57;
-}
-.slider input[type="range"] {
- -webkit-appearance:none !important;
- width:420px;
- height:2px;
- background:#7E6D57;
- border:none;
- outline:none;
-}
-.slider input[type="range"]::-webkit-slider-thumb {
- -webkit-appearance:none !important;
- width:30px;
- height:30px;
- background:#fcfcfc;
- border:2px solid #7E6D57;
- border-radius:50%;
- cursor:pointer;
-}
-.slider input[type="range"]::-webkit-slider-thumb:hover {
- background:#7E6D57;
-}
-</style>
-<link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css'>
-<link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css'>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
-</head>
-<body>
-
-<div class="container">
-    <center><img src="cryostat.jpg" usemap="#image-map"></center>
-    <map name="image-map">
-        <area class="rect" target="" alt="cryocooler" id="cryocooler" coords="86,126,267,507" shape="rect">
-        <area class="rect" target="" alt="left_magnet" id="left_magnet"  coords="358,251,391,331" shape="rect">
-        <area class="rect" target="" alt="right_magnet" id="right_magnet"  coords="438,252,470,330" shape="rect">
-        <area class="rect" target="" alt="red_part" id="red_part"  coords="324,469,506,513" shape="rect">
-        <area class="rect" target="" alt="small_box" id="small_box"  coords="459,394,366,353" shape="rect">
-        <area class="rect" target="" alt="big_box" id="big_box"  coords="322,401,506,453" shape="rect">
-        <area class="rect" target="" alt="sample" id="sample"  coords="404,331,426,352" shape="rect">
-    </map>
-
-  <!-- Modal -->
-  <div class="modal fade" id="myModal" role="dialog">
-    <div class="modal-dialog">
-    
-      <!-- Modal content-->
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">Customize your <span id="component"></span></h4>
-        </div>
-        <div class="modal-body" style="font-size: 16px;">
-          <ul>
-            <li>
-              <p>Select the power of the magnet: <b><span id="rangeValue">10 T</span></b></p>
-              <div class="slider">
-                <input type="range" min="1" max="20" value="10" oninput="rangeValue.innerText = this.value + ' T'">
-              </div>
-            <li><p>Choose optimizations from <a href="https://cryoverse.web.app">Cryoverse</a>: <button id="optimization_button" class="btn btn-primary" type="button">Add Optimization</button></p>
-              <section class='blockfield'>
-
-              </section>
-            </li>
-          </ul>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        </div>
-      </div>
-      
-    </div>
-  </div>
-  
-</div>
-<script>
-    function setMyHandler(){
-        var elements = document.getElementsByClassName('rect');
-        console.log('length=' + elements.length);
-        for(var i = 0; i < elements.length; i++){
-            elements[i].onclick = function(){
-                if (this.id === 'right_magnet' || this.id == 'left_magnet') {
-                    $('#myModal').modal('show');
-                    $('#component').html('magnets!');
-                }
-            };
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>Qalt</title>
+        <!-- Favicon-->
+        <link rel="icon" type="image/png" href="paper-dashboard-master/assets/img/rocket.ico">
+        <!-- Bootstrap icons-->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
+        <!-- Core theme CSS (includes Bootstrap)-->
+        <style>
+          li:not(:last-child) { 
+           margin-bottom: 10px;  
         }
-    }
-    
-    setMyHandler();
+        
+          .slider {
+         position:relative;
+         background:#fcfcfc;
+         border-radius:5px;
+         display:flex;
+         align-items:center;
+        }
+        .slider p {
+         font-size:18px;
+         font-weight:600;
+         font-family: Open Sans;
+         color:#7E6D57;
+        }
+        .slider input[type="range"] {
+         -webkit-appearance:none !important;
+         width:420px;
+         height:2px;
+         background:#7E6D57;
+         border:none;
+         outline:none;
+        }
+        .slider input[type="range"]::-webkit-slider-thumb {
+         -webkit-appearance:none !important;
+         width:30px;
+         height:30px;
+         background:#fcfcfc;
+         border:2px solid #7E6D57;
+         border-radius:50%;
+         cursor:pointer;
+        }
+        .slider input[type="range"]::-webkit-slider-thumb:hover {
+         background:#7E6D57;
+        }
+        </style>
+        <link href="styles.css" rel="stylesheet" />
+        <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css'>
+        <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css'>
 
-  $(document).ready(function() {
-    $("#optimization_button").on('click', function() {
-      $(".blockfield").append(
-        `<div class="row parent" style="margin-left: 20px; margin-bottom: 5px;">
-          <div class="col-md-8">
-            <div class="input-group">
-              <input class="form-control" type="text">
-              <span class="input-group-btn">
-                <button class="btn btn-danger removebtn"><i class="fa fa-trash-o" aria-hidden="true"></i></button>      
-              </span>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    </head>
+    <body class="d-flex flex-column h-100">
+        <main class="flex-shrink-0">
+            <!-- Navigation-->
+            <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+                <div class="container px-5">
+                    <a class="navbar-brand" href="index.html">Qalt</a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                            <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                            <li class="nav-item"><a class="nav-link" href="customize.html">Customize</a></li>
+                            <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
+                            <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        <section class="py-5" id="features">
+
+          <!-- Modal -->
+          <div class="modal fade" id="myModal" role="dialog">
+            <div class="modal-dialog">
+            
+              <!-- Modal content-->
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+                  <h4 class="modal-title">Customize your <span id="component"></span></h4>
+                </div>
+                <div class="modal-body" style="font-size: 16px;">
+                  <ul>
+                    <li>
+                      <p>Select the power of the magnet: <b><span id="rangeValue">10 T</span></b></p>
+                      <div class="slider">
+                        <input type="range" min="1" max="20" value="10" oninput="rangeValue.innerText = this.value + ' T'">
+                      </div>
+                    <li><p>Choose optimizations from <a href="https://cryoverse.web.app">Cryoverse</a>: <button id="optimization_button" class="btn btn-primary" type="button">Add Optimization</button></p>
+                      <section class='blockfield'>
+
+                      </section>
+                    </li>
+                  </ul>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+              </div>
+              
             </div>
           </div>
-        </div>`).show();
-    });
-  });
 
-  $(document).on("click", '.removebtn', function(e) {
-    var tgt = $(this);
-    idx = tgt.closest('.row').index()
-    $('.block').eq(idx).removeClass('not-allowed').find('.list').removeClass('no-click');
-    tgt.closest('.row').hide();
-  });
-</script>
-
-</body>
+            <center><img src="cryostat.jpg" usemap="#image-map"></center>
+            <map name="image-map">
+                <area class="rect" target="" alt="cryocooler" id="cryocooler" coords="86,126,267,507" shape="rect">
+                <area class="rect" target="" alt="left_magnet" id="left_magnet"  coords="358,251,391,331" shape="rect">
+                <area class="rect" target="" alt="right_magnet" id="right_magnet"  coords="438,252,470,330" shape="rect">
+                <area class="rect" target="" alt="red_part" id="red_part"  coords="324,469,506,513" shape="rect">
+                <area class="rect" target="" alt="small_box" id="small_box"  coords="459,394,366,353" shape="rect">
+                <area class="rect" target="" alt="big_box" id="big_box"  coords="322,401,506,453" shape="rect">
+                <area class="rect" target="" alt="sample" id="sample"  coords="404,331,426,352" shape="rect">
+            </map>
+        </section>
+        </main>
+        <!-- Footer-->
+        <footer class="bg-dark py-4 mt-auto">
+            <div class="container px-5">
+                <div class="row align-items-center justify-content-between flex-column flex-sm-row">
+                    <div class="col-auto"><div class="small m-0 text-white">Copyright &copy; Qalt <script>document.write(new Date().getFullYear())</script> </div></div>
+                    <div class="col-auto">
+                        <a class="link-light small" href="#!">Privacy</a>
+                        <span class="text-white mx-1">&middot;</span>
+                        <a class="link-light small" href="#!">Terms</a>
+                        <span class="text-white mx-1">&middot;</span>
+                        <a class="link-light small" href="#!">Contact</a>
+                    </div>
+                </div>
+            </div>
+        </footer>
+      <script>
+        function setMyHandler() {
+          var elements = document.getElementsByClassName('rect');
+          console.log('length=' + elements.length);
+          for (let i = 0; i < elements.length; i++){
+            elements[i].onclick = function() {
+              console.log(this.id);
+              if (this.id === 'right_magnet' || this.id == 'left_magnet') {
+                $('#myModal').modal('show');
+                $('#component').html('magnets!');
+              }
+            };
+          }
+        }
+            
+        setMyHandler();
+        
+        $(document).ready(function() {
+          $("#optimization_button").on('click', function() {
+            $(".blockfield").append(
+              `<div class="row parent" style="margin-left: 20px; margin-bottom: 5px;">
+                <div class="col-md-8">
+                  <div class="input-group">
+                    <input class="form-control" type="text">
+                    <span class="input-group-btn">
+                    <button class="btn btn-danger removebtn"><i class="fa fa-trash-o" aria-hidden="true"></i></button>      
+                    </span>
+                  </div>
+                </div>
+              </div>`).show();
+          });
+        });
+        
+        $(document).on("click", '.removebtn', function(e) {
+          var tgt = $(this);
+          idx = tgt.closest('.row').index()
+          $('.block').eq(idx).removeClass('not-allowed').find('.list').removeClass('no-click');
+          tgt.closest('.row').hide();
+        });
+        </script>        
+    </body>
 </html>

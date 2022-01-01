@@ -1,0 +1,7 @@
+<area class="rect" target="" alt="cryocooler" id="cryocooler" coords="42,62,131,248" shape="rect">
+<area class="rect" target="" alt="left_magnet" id="left_magnet"  coords="175,123,192,162" shape="rect">
+<area class="rect" target="" alt="right_magnet" id="right_magnet"  coords="215,123,230,162" shape="rect">
+<area class="rect" target="" alt="red_part" id="red_part"  coords="159,230,248,251" shape="rect">
+<area class="rect" target="" alt="small_box" id="small_box"  coords="225,193,179,173" shape="rect">
+<area class="rect" target="" alt="big_box" id="big_box"  coords="158,196,248,222" shape="rect">
+<area class="rect" target="" alt="sample" id="sample"  coords="198,162,209,172" shape="rect">
