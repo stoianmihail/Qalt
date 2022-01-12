@@ -12,6 +12,10 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
         <!-- Core theme CSS (includes Bootstrap)-->
         <link href="css/style.css" rel="stylesheet" />
+        <script src="js/three.min.js"></script>
+        <script src="js/STLLoader.js"></script>
+        <script src="js/OrbitControls.js"></script>
+        <script src="js/stl_viewer.js"></script>      
     </head>
     <body class="d-flex flex-column h-100">
         <main class="flex-shrink-0">
@@ -44,7 +48,8 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-xl-5 col-xxl-6 d-none d-xl-block text-center"><img class="img-fluid rounded-3 my-5" src="https://dummyimage.com/600x400/343a40/6c757d" alt="..." /></div>
+                        <div id="model" class="col-xl-5 col-xxl-6 d-none d-xl-block text-center" style="width: 500px; height: 500px;">
+                        </div>
                     </div>
                 </div>
             </header>
@@ -116,5 +121,10 @@
                 </div>
             </div>
         </footer>
+<script>
+  window.onload = function() {
+    STLViewer("/assets/Qaltinator.stl", "model");
+  }
+</script>
     </body>
 </html>
