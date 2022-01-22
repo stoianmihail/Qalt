@@ -1,12 +1,19 @@
-html,body{ margin:0; padding:0; height:100%; width:100%; }
-#model{
-  height:100%;
-  width:100%;
-  overflow:hidden; /* or overflow:auto; if you want scrollbars */
+body {
+  /* Full screen width and height */
+  width: 100%;
+  min-height: 100vh;
+
+  /* Centers the container in the middle of the screen */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  margin: 0;
+  background-color: rgb(220, 220, 220);
 }
 
 #container {
-  perspective: 100px;
+  perspective: 200px;
 }
 
 #inner {

@@ -8,44 +8,38 @@
   <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css'>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-  <script src="js/three.min.js"></script>
-  <script src="js/STLLoader.js"></script>
-  <script src="js/OrbitControls.js"></script>
-  <script src="js/stl_viewer.js"></script>
 </head>
 <body>
-  <div id="model"></div>
-
-<div id="container">
-  <div id="inner">
-    <center><img src="cryostat.jpg" style="max-width: 714px;" usemap="#image-map"></center>
+<!-- partial:index.partial.html -->
+<!--<div id="container">
+  <div id="inner">-->
+    <center><img src="assets/cryostat.png" style="width: 100%;" usemap="#image-map"></center>
     <map name="image-map">
-      <area class="rect" title="Cryocooler" target="" alt="cryocooler" id="cryocooler" coords="86,126,267,507" shape="rect">
-      <area class="rect" title="Magnets" target="" alt="left_magnet" id="left_magnet"  coords="358,251,391,331" shape="rect">
-      <area class="rect" title="Magnets" target="" alt="right_magnet" id="right_magnet"  coords="438,252,470,330" shape="rect">
-      <area class="rect" title="Heater" target="" alt="red_part" id="red_part"  coords="324,469,506,513" shape="rect">
-      <area class="rect" target="" alt="small_box" id="small_box"  coords="459,394,366,353" shape="rect">
-      <area class="rect" target="" alt="big_box" id="big_box"  coords="322,401,506,453" shape="rect">
-      <area class="rect" title="Sample container" target="" alt="sample" id="sample"  coords="404,331,426,352" shape="rect">
+        <area class="poly" id="Cryocooler" target="" alt="Cryocooler" title="Cryocooler" coords="461,801,573,742,574,240,442,114,259,217,258,728,385,775" shape="poly">
+        <area class="poly" id="Cold-finger" target="" alt="Cold finger" title="Cold finger" coords="774,679,877,624,707,524,610,582" shape="poly">
+        <area class="poly" id="Sample-Environment" target="" alt="Sample container" title="Sample Environment" coords="930,547,979,518,980,420,934,390,866,393,816,422,815,518,863,548" shape="poly">
     </map>
-  </div>
-</div>
+  <!--</div>
+</div>-->
 
+<!-- Modal -->
 <div class="modal fade" id="myModal" role="dialog">
   <div class="modal-dialog">
+    <!-- Modal content-->
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title" style="font-size: 20px;">Customize your <span id="component"></span></h4>
+        <h4 class="modal-title" style="font-size: 20px;">Customize your <code><span id="component"></span></code>!</h4>
       </div>
       <div class="modal-body" style="font-size: 20px;">
         <ul>
-          <li>
-            <p>Select the power of the magnet: <b><span id="rangeValue">5 T</span></b></p>
+          <li id="magnet-optimization">
+            <p>Select the power of the magnet: <b><span id="rangeValue">10 T</span></b></p>
             <div class="slider">
-              <input type="range" min="1" max="15" value="5" oninput="rangeValue.innerText = this.value + ' T'">
+              <input type="range" min="1" max="20" value="10" oninput="rangeValue.innerText = this.value + ' T'">
             </div>
-          <li><p>Link optimizations from <a href="https://cryoverse.web.app/forum.html?tag=magnets">Cryoverse</a>: <button id="optimization_button" class="btn btn-primary" type="button">Add Optimization</button></p>
+          </li>
+          <li><p>Link optimizations from <a id="link" href="https://cryoverse.web.app">Cryoverse</a>: <button id="optimization_button" class="btn btn-primary" type="button">Add Optimization</button></p>
             <section class='blockfield'>
 
             </section>
@@ -59,63 +53,33 @@
   </div>
 </div>
 
+<!-- partial -->
 <script>
-  var model = document.getElementById('model');
-  var mouse = {
-    delta : undefined,
-    start : undefined,
-    position : {x:0, y:0},
-    downedPos : {x:0, y:0},
-    upedPos : {x:0, y:0},
+  let tags = {
+    'Cryocooler' : 'temperature',
+    'Sample-Environment' : 'sample',
+    'Cold-finger' : 'vibrations'
   };
 
-  mouse.getPosition = function(e) {
-    this.position.x = e.clientX;
-    this.position.y = e.clientY;
-    return this.position;
-  }
-
-  model.addEventListener('mousedown', function(e) {
-    console.log('mousedown!');
-    mouse.start = new Date();
-    ms = mouse.getPosition(e);
-    mouse.downedPos = clone(ms);
-  });
-
-  model.addEventListener('mouseup', function(e) {
-    ms = mouse.getPosition(e);
-    mouse.delta = new Date() - mouse.start;
-    mouse.upedPos = clone(ms);
-  });
-
-  function clone(obj) {
-    if (null == obj || "object" != typeof obj) return obj;
-    var copy = obj.constructor();
-    for (var attr in obj) {
-      if (obj.hasOwnProperty(attr)) copy[attr] = obj[attr];
+  function setMyHandler(){
+    var elements = document.getElementsByClassName('poly');
+    for(var i = 0; i < elements.length; i++){
+      elements[i].onclick = function(){
+        console.log(this.id);
+        if (tags[this.id] === 'sample') {
+          $('#magnet-optimization').show();
+        } else {
+          $('#magnet-optimization').hide();
+        }
+        $('#link').attr('href', `https://cryoverse.web.app/forum.html?tag=${tags[this.id]}`);
+        $('#component').html(this.id.replace('-', ' '));
+        $('#myModal').modal('show');
+      };
     }
-    return copy;
   }
-
-  $("#model").on("click", function(e) {
-    e.stopPropagation();
-    e.preventDefault();
-    console.log('delta=' + mouse.delta);
-    if ((mouse.delta !== undefined) && (mouse.delta <= 200)) {
-      // Maybe a rapid movement.
-      let a = mouse.downedPos.x - mouse.upedPos.x;
-      let b = mouse.downedPos.y - mouse.upedPos.y;
-      let dist = Math.sqrt(a*a + b*b);
-      console.log('dist=' + dist);
-      if (dist > 5) {
-        return;
-      }
-
-      $('#myModal').modal('show');
-      $('#component').html('magnets!');
-    }
-  });
   
+  setMyHandler();
+
   $(document).ready(function() {
     $("#optimization_button").on('click', function() {
       $(".blockfield").append(
@@ -138,10 +102,6 @@
     $('.block').eq(idx).removeClass('not-allowed').find('.list').removeClass('no-click');
     tgt.closest('.row').hide();
   });
-
-  window.onload = function() {
-    STLViewer("/assets/Qaltinator3.stl", "model");
-  }
-</script>
+  </script>
 </body>
 </html>
